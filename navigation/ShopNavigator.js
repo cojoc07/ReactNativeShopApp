@@ -3,22 +3,25 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { enableScreens } from "react-native-screens";
 import { createNativeStackNavigator } from "react-native-screens/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Platform } from "react-native";
+
 import ProductsOverviewScreen from "../screens/shop/ProductsOverviewScreen";
 import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
+import UserProductsScreen from "../screens/user/UserProductsScreen";
+
 import Colors from "../constants/colors";
 
 import { Icon } from "react-native-elements";
 
-enableScreens();
-
 const ProductsNavigator = createNativeStackNavigator();
 const OrdersNavigator = createNativeStackNavigator();
+const AdminNavigator = createNativeStackNavigator();
 
 const defaultScreenOptions = {
   headerStyle: {
@@ -29,14 +32,46 @@ const defaultScreenOptions = {
 
 const OrdersNavScreens = () => {
   return (
-    <OrdersNavigator.Navigator>
+    <OrdersNavigator.Navigator screenOptions={defaultScreenOptions}>
       <OrdersNavigator.Screen
         name="OrdersScreen"
         component={OrdersScreen}
         options={({ route, navigation }) => {
           return {
-            headerTitle: "Your orders",
-            headerLeft: () => (
+            title: "Your orders",
+            headerRight: () => (
+              <View style={{ flexDirection: "row" }}>
+                <Icon
+                  type="ionicon"
+                  size={28}
+                  name={Platform.OS === "ios" ? "ios-person" : "md-person"}
+                  onPress={() => {}}
+                />
+                <Icon
+                  type="ionicon"
+                  size={28}
+                  name={Platform.OS === "ios" ? "ios-person" : "md-person"}
+                  onPress={() => {}}
+                />
+              </View>
+            ),
+          };
+        }}
+      />
+    </OrdersNavigator.Navigator>
+  );
+};
+
+const AdminNavScreens = () => {
+  return (
+    <AdminNavigator.Navigator screenOptions={defaultScreenOptions}>
+      <AdminNavigator.Screen
+        name="UserProductsScreen"
+        component={UserProductsScreen}
+        options={({ route, navigation }) => {
+          return {
+            headerTitle: "Your listed products",
+            headerRight: () => (
               <Icon
                 type="ionicon"
                 size={28}
@@ -47,7 +82,7 @@ const OrdersNavScreens = () => {
           };
         }}
       />
-    </OrdersNavigator.Navigator>
+    </AdminNavigator.Navigator>
   );
 };
 
@@ -66,14 +101,6 @@ const ProductsNavScreens = () => {
                 size={28}
                 name={Platform.OS === "ios" ? "ios-cart" : "md-cart"}
                 onPress={() => navigation.navigate("CartScreen")}
-              />
-            ),
-            headerLeft: () => (
-              <Icon
-                type="ionicon"
-                size={28}
-                name={Platform.OS === "ios" ? "ios-person" : "md-person"}
-                onPress={() => {}}
               />
             ),
           };
@@ -155,6 +182,27 @@ const MyTabScreens = () => {
                   <Icon
                     type="ionicon"
                     name={Platform.OS === "android" ? "md-list" : "ios-list"}
+                    size={25}
+                    color={tabInfo.color}
+                  />
+                );
+              },
+            };
+          }}
+        />
+        <MyTab.Screen
+          name="Admin"
+          component={AdminNavScreens}
+          headerTitle="Your stuff"
+          options={({ route }) => {
+            return {
+              tabBarIcon: (tabInfo) => {
+                return (
+                  <Icon
+                    type="ionicon"
+                    name={
+                      Platform.OS === "android" ? "md-create" : "ios-create"
+                    }
                     size={25}
                     color={tabInfo.color}
                   />

@@ -22,12 +22,14 @@ const CartItem = (props) => {
       <View style={styles.itemData}>
         <Text style={styles.price}>${props.amount.toFixed(2)}</Text>
         <TouchableOpacity onPress={props.onRemove} style={styles.deleteButton}>
-          <Icon
-            type="ionicon"
-            name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
-            size={23}
-            color="red"
-          />
+          {props.canDelete && (
+            <Icon
+              type="ionicon"
+              name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
+              size={23}
+              color="red"
+            />
+          )}
         </TouchableOpacity>
       </View>
     </View>
