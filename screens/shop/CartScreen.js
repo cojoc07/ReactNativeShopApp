@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
+  ActivityIndicator,
   View,
   Text,
   Button,
@@ -11,10 +12,14 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Colors from "../../constants/colors";
 import CartItem from "../../components/shop/CartItem";
+import Card from "../../components/ui/Card";
 import * as cartActions from "../../store/actions/cart";
 import * as orderActions from "../../store/actions/orders";
 
 const CartScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
     const transformedCartItems = [];
@@ -34,25 +39,34 @@ const CartScreen = (props) => {
 
   const dispatch = useDispatch();
 
+  const sendOrder = async () => {
+    setIsLoading(true);
+    await dispatch(orderActions.addOrder(cartItems, cartTotalAmount));
+    setIsLoading(false);
+  };
+
   return (
     <View style={styles.screen}>
       <StatusBar
         translucent={true}
         barStyle={Platform.OS == "android" ? "auto" : "dark-content"}
       />
-      <View style={styles.summary}>
+      <Card style={styles.summary}>
         <Text style={styles.summaryText}>
           Total:{" "}
           <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
         </Text>
-        <Button
-          title="Order now"
-          disabled={cartItems.length === 0}
-          onPress={() =>
-            dispatch(orderActions.addOrder(cartItems, cartTotalAmount))
-          }
-        />
-      </View>
+
+        {isLoading ? (
+          <ActivityIndicator size="small" color={Colors.primaryColor} />
+        ) : (
+          <Button
+            title="Order now"
+            disabled={cartItems.length === 0}
+            onPress={sendOrder}
+          />
+        )}
+      </Card>
       <View>
         <FlatList
           data={cartItems}
@@ -84,16 +98,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 20,
     padding: 10,
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "white",
   },
   summaryText: {
     fontFamily: "open-sans-bold",

@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "open-sans-bold",
     fontSize: 16,
-    maxWidth: "70%",
+    maxWidth: "90%",
   },
   price: {
     fontFamily: "open-sans-bold",

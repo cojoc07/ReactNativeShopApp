@@ -7,18 +7,22 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Platform } from "react-native";
+import { View, Platform } from "react-native";
 
+import AuthScreen from "../screens/user/AuthScreen";
 import ProductsOverviewScreen from "../screens/shop/ProductsOverviewScreen";
 import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
 import UserProductsScreen from "../screens/user/UserProductsScreen";
+import { submitHandler } from "../screens/user/UserProductsScreen";
 
+import EditProductScreen from "../screens/user/EditProductScreen";
 import Colors from "../constants/colors";
 
 import { Icon } from "react-native-elements";
 
+const AuthNavigator = createNativeStackNavigator();
 const ProductsNavigator = createNativeStackNavigator();
 const OrdersNavigator = createNativeStackNavigator();
 const AdminNavigator = createNativeStackNavigator();
@@ -28,6 +32,17 @@ const defaultScreenOptions = {
     backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
   },
   headerTintColor: Platform.OS === "android" ? "#000000" : "#000000",
+};
+
+const AuthNavScreens = () => {
+  return (
+    <AuthNavigator.Navigator screenOptions={defaultScreenOptions}>
+      <AuthNavigator.Screen
+        name="AuthScreen"
+        component={AuthScreen}
+      ></AuthNavigator.Screen>
+    </AuthNavigator.Navigator>
+  );
 };
 
 const OrdersNavScreens = () => {
@@ -46,6 +61,7 @@ const OrdersNavScreens = () => {
                   size={28}
                   name={Platform.OS === "ios" ? "ios-person" : "md-person"}
                   onPress={() => {}}
+                  iconStyle={{ marginHorizontal: 10 }}
                 />
                 <Icon
                   type="ionicon"
@@ -75,10 +91,23 @@ const AdminNavScreens = () => {
               <Icon
                 type="ionicon"
                 size={28}
-                name={Platform.OS === "ios" ? "ios-person" : "md-person"}
-                onPress={() => {}}
+                name={Platform.OS === "ios" ? "ios-create" : "md-create"}
+                onPress={() => {
+                  navigation.navigate("EditProductScreen");
+                }}
               />
             ),
+          };
+        }}
+      />
+      <AdminNavigator.Screen
+        name="EditProductScreen"
+        component={EditProductScreen}
+        options={({ route, navigation }) => {
+          return {
+            headerTitle: route.params?.productId
+              ? "Edit product"
+              : "Create product",
           };
         }}
       />
@@ -94,7 +123,7 @@ const ProductsNavScreens = () => {
         component={ProductsOverviewScreen}
         options={({ route, navigation }) => {
           return {
-            headerTitle: "All products!",
+            headerTitle: "Lista de produse",
             headerRight: () => (
               <Icon
                 type="ionicon"
