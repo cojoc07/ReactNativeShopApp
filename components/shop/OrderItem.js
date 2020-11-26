@@ -15,7 +15,7 @@ const OrderItem = (props) => {
       </View>
 
       <Button
-        title={detailsShown ? "Hide details" : "Show details"}
+        title={detailsShown ? "Mai puțin" : "Mai mult"}
         color={Colors.primaryColor}
         onPress={() => setDetailsShown((prevState) => !prevState)}
       />

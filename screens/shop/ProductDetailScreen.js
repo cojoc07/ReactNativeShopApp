@@ -37,7 +37,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
         <View style={styles.actions}>
           <Button
             color={Colors.primaryColor}
-            title="Add to Cart"
+            title="Adaugă în coș"
             onPress={() => {
               dispatch(cartActions.addToCart(selectedProduct));
             }}

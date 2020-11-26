@@ -1,26 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { enableScreens } from "react-native-screens";
 import { createNativeStackNavigator } from "react-native-screens/native-stack";
-import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { View, Platform } from "react-native";
 
 import AuthScreen from "../screens/user/AuthScreen";
+//import StartupScreen from "../screens/StartupScreen";
 import ProductsOverviewScreen from "../screens/shop/ProductsOverviewScreen";
 import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
 import UserProductsScreen from "../screens/user/UserProductsScreen";
-import { submitHandler } from "../screens/user/UserProductsScreen";
 
 import EditProductScreen from "../screens/user/EditProductScreen";
 import Colors from "../constants/colors";
 
 import { Icon } from "react-native-elements";
+import { useDispatch, useSelector } from "react-redux";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import * as authActions from "../store/actions/auth";
 
 const AuthNavigator = createNativeStackNavigator();
 const ProductsNavigator = createNativeStackNavigator();
@@ -46,6 +49,7 @@ const AuthNavScreens = () => {
 };
 
 const OrdersNavScreens = () => {
+  const dispatch = useDispatch();
   return (
     <OrdersNavigator.Navigator screenOptions={defaultScreenOptions}>
       <OrdersNavigator.Screen
@@ -53,7 +57,11 @@ const OrdersNavScreens = () => {
         component={OrdersScreen}
         options={({ route, navigation }) => {
           return {
-            title: "Your orders",
+            title: "Comenzile tale",
+            headerStyle: {
+              backgroundColor: Colors.primaryColor,
+            },
+
             headerRight: () => (
               <View style={{ flexDirection: "row" }}>
                 <Icon
@@ -66,8 +74,12 @@ const OrdersNavScreens = () => {
                 <Icon
                   type="ionicon"
                   size={28}
-                  name={Platform.OS === "ios" ? "ios-person" : "md-person"}
-                  onPress={() => {}}
+                  name={Platform.OS === "ios" ? "ios-bed" : "md-bed"}
+                  onPress={() => {
+                    AsyncStorage.removeItem("userData"); //state are in continuare tokenul
+
+                    dispatch(authActions.setCredentials("", "")); //stergem si din state
+                  }}
                 />
               </View>
             ),
@@ -86,7 +98,10 @@ const AdminNavScreens = () => {
         component={UserProductsScreen}
         options={({ route, navigation }) => {
           return {
-            headerTitle: "Your listed products",
+            headerTitle: "Produsele tale",
+            headerStyle: {
+              backgroundColor: Colors.primaryColor,
+            },
             headerRight: () => (
               <Icon
                 type="ionicon"
@@ -105,9 +120,12 @@ const AdminNavScreens = () => {
         component={EditProductScreen}
         options={({ route, navigation }) => {
           return {
+            headerStyle: {
+              backgroundColor: Colors.albastru,
+            },
             headerTitle: route.params?.productId
-              ? "Edit product"
-              : "Create product",
+              ? "Editează produs"
+              : "Crează produs",
           };
         }}
       />
@@ -124,6 +142,9 @@ const ProductsNavScreens = () => {
         options={({ route, navigation }) => {
           return {
             headerTitle: "Lista de produse",
+            headerStyle: {
+              backgroundColor: Colors.primaryColor,
+            },
             headerRight: () => (
               <Icon
                 type="ionicon"
@@ -141,6 +162,9 @@ const ProductsNavScreens = () => {
         options={({ route, navigation }) => {
           return {
             headerTitle: route.params.productTitle,
+            headerStyle: {
+              backgroundColor: Colors.primaryColor,
+            },
             headerRight: () => (
               <Icon
                 type="ionicon"
@@ -157,7 +181,7 @@ const ProductsNavScreens = () => {
         component={CartScreen}
         options={({ route, navigation }) => {
           return {
-            headerTitle: "Your cart!",
+            headerTitle: "Coșul tău",
           };
         }}
       />
@@ -165,84 +189,122 @@ const ProductsNavScreens = () => {
   );
 };
 
-const MyTab =
-  Platform.OS === "android"
-    ? createMaterialBottomTabNavigator()
-    : createBottomTabNavigator();
+const MyTab = createMaterialBottomTabNavigator();
 
 const MyTabScreens = () => {
   return (
-    <NavigationContainer>
-      <MyTab.Navigator
-        tabBarOptions={{
-          activeTintColor: Colors.accentColor,
-          inactiveTintColor: "gray",
+    <MyTab.Navigator
+      tabBarOptions={{
+        activeTintColor: Colors.accentColor,
+        inactiveTintColor: "gray",
+      }}
+      initialRouteName="Home"
+      /* activeColor="#f0edf6"
+      inactiveColor="#3e2465" */
+      activeColor="#FFF"
+      shifting={true}
+      barStyle={{ backgroundColor: Colors.primaryColor }}
+    >
+      <MyTab.Screen
+        name="Produse"
+        component={ProductsNavScreens}
+        options={({ route }) => {
+          return {
+            tabBarColor: Colors.primaryColor,
+            tabBarIcon: (tabInfo) => {
+              return (
+                <Icon
+                  type="ionicon"
+                  name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+                  size={25}
+                  color={tabInfo.color}
+                />
+              );
+            },
+          };
         }}
-        initialRouteName="Home"
-        activeColor="#f0edf6"
-        inactiveColor="#3e2465"
-        barStyle={{ backgroundColor: Colors.primaryColor }}
-      >
-        <MyTab.Screen
-          name="Products"
-          component={ProductsNavScreens}
-          options={({ route }) => {
-            return {
-              tabBarIcon: (tabInfo) => {
-                return (
-                  <Icon
-                    type="ionicon"
-                    name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
-                    size={25}
-                    color={tabInfo.color}
-                  />
-                );
-              },
-            };
-          }}
-        />
-        <MyTab.Screen
-          name="Orders"
-          component={OrdersNavScreens}
-          options={({ route }) => {
-            return {
-              tabBarIcon: (tabInfo) => {
-                return (
-                  <Icon
-                    type="ionicon"
-                    name={Platform.OS === "android" ? "md-list" : "ios-list"}
-                    size={25}
-                    color={tabInfo.color}
-                  />
-                );
-              },
-            };
-          }}
-        />
-        <MyTab.Screen
-          name="Admin"
-          component={AdminNavScreens}
-          headerTitle="Your stuff"
-          options={({ route }) => {
-            return {
-              tabBarIcon: (tabInfo) => {
-                return (
-                  <Icon
-                    type="ionicon"
-                    name={
-                      Platform.OS === "android" ? "md-create" : "ios-create"
-                    }
-                    size={25}
-                    color={tabInfo.color}
-                  />
-                );
-              },
-            };
-          }}
-        />
-      </MyTab.Navigator>
+      />
+      <MyTab.Screen
+        name="Comenzi"
+        component={OrdersNavScreens}
+        options={({ route }) => {
+          return {
+            tabBarColor: Colors.verde,
+            tabBarIcon: (tabInfo) => {
+              return (
+                <Icon
+                  type="ionicon"
+                  name={Platform.OS === "android" ? "md-list" : "ios-list"}
+                  size={25}
+                  color={tabInfo.color}
+                />
+              );
+            },
+          };
+        }}
+      />
+      <MyTab.Screen
+        name="Admin"
+        component={AdminNavScreens}
+        headerTitle="Your stuff"
+        options={({ route }) => {
+          return {
+            tabBarColor: Colors.albastru,
+            tabBarIcon: (tabInfo) => {
+              return (
+                <Icon
+                  type="ionicon"
+                  name={Platform.OS === "android" ? "md-create" : "ios-create"}
+                  size={25}
+                  color={tabInfo.color}
+                />
+              );
+            },
+          };
+        }}
+      />
+    </MyTab.Navigator>
+  );
+};
+
+const StartupScreen = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const checkCredentials = async () => {
+      const userData = await AsyncStorage.getItem("userData");
+      if (!userData) {
+        console.log("n-am gasit nimic in async storage");
+        return;
+      }
+
+      const transformedData = JSON.parse(userData);
+      const { token, userId, expirationDate } = transformedData;
+      const expDate = new Date(expirationDate);
+
+      if (expDate <= new Date() || !token || !userId) {
+        console.log("Am gasit token, invalid.");
+        return;
+      }
+
+      console.log("Am gasit token VALID.");
+      dispatch(
+        authActions.setCredentials(
+          transformedData.token,
+          transformedData.userId
+        )
+      );
+    };
+    checkCredentials();
+  }, []);
+
+  const isAuth = useSelector((state) => state.auth?.userId);
+
+  return (
+    <NavigationContainer>
+      {isAuth ? <MyTabScreens /> : <AuthNavScreens />}
     </NavigationContainer>
   );
 };
 
-export default MyTabScreens;
+export default StartupScreen;

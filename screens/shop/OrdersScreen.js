@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   View,
   FlatList,
+  Image,
   Text,
   StatusBar,
   Platform,
@@ -46,6 +47,19 @@ const OrdersScreen = ({ route, navigation }) => {
     );
   }
 
+  if (orders.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Image
+          source={require("../../assets/no-orders.png")}
+          style={{ height: 150, width: 150 }}
+        />
+        <Text style={styles.label}>Nu ai trimis nicio comandă.</Text>
+        <Text>Comandă ceva astăzi !</Text>
+      </View>
+    );
+  }
+
   return (
     <View>
       <StatusBar
@@ -72,6 +86,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  label: {
+    marginTop: 20,
+    fontFamily: "open-sans-bold",
+    fontSize: 20,
   },
 });
 

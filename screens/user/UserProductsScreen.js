@@ -1,6 +1,15 @@
 import React, { useEffect } from "react";
 
-import { Alert, Platform, Button, FlatList } from "react-native";
+import {
+  Alert,
+  Platform,
+  Button,
+  FlatList,
+  Image,
+  Text,
+  StyleSheet,
+  View,
+} from "react-native";
 import ProductItem from "../../components/shop/ProductItem";
 import { useSelector, useDispatch } from "react-redux";
 import * as productActions from "../../store/actions/products";
@@ -40,6 +49,21 @@ const UserProductsScreen = ({ route, navigation }) => {
     ]);
   };
 
+  {
+    if (userProducts.length == 0) {
+      return (
+        <View style={styles.centered}>
+          <Image
+            source={require("../../assets/shelves.png")}
+            style={{ height: 150, width: 150 }}
+          />
+          <Text style={styles.label}>Nu ai niciun produs la vânzare.</Text>
+          <Text>Adaugă un produs astăzi !</Text>
+        </View>
+      );
+    }
+  }
+
   return (
     <FlatList
       data={userProducts}
@@ -54,14 +78,14 @@ const UserProductsScreen = ({ route, navigation }) => {
           }}
         >
           <Button
-            title="Edit"
+            title="Editează produs"
             color={Colors.accentColor}
             onPress={() => {
               editProductHandler(itemData.item.id);
             }}
           />
           <Button
-            title="Delete"
+            title="Șterge produs"
             color={Colors.accentColor}
             onPress={() => deleteProductHandler(itemData.item.id)}
           />
@@ -70,5 +94,18 @@ const UserProductsScreen = ({ route, navigation }) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  label: {
+    marginTop: 20,
+    fontFamily: "open-sans-bold",
+    fontSize: 20,
+  },
+});
 
 export default UserProductsScreen;

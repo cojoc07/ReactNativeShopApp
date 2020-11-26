@@ -160,7 +160,7 @@ const EditProductScreen = ({ route, navigation }) => {
         } else {
           setPriceIsValid(true);
         }
-        setPrice(text);
+        setPrice(text.replace(",", "."));
         return;
       }
     }

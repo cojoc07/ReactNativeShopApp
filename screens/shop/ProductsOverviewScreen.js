@@ -17,7 +17,7 @@ import * as productActions from "../../store/actions/products";
 import Colors from "../../constants/colors";
 
 const ProductsOverviewScreen = ({ route, navigation }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
   const products = useSelector((state) => state.products.availableProducts);
@@ -32,15 +32,15 @@ const ProductsOverviewScreen = ({ route, navigation }) => {
     try {
       await dispatch(productActions.fetchProducts());
     } catch (err) {
-      console.log(err);
       setError(err.message);
     }
     setIsRefreshing(false);
   }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    setIsLoading(true);
-    loadProducts().then(() => setIsLoading(false));
+    loadProducts().then(() => {
+      setIsLoading(false);
+    });
   }, [dispatch, loadProducts]);
 
   const selectItemHandler = (id, title) => {
@@ -97,14 +97,14 @@ const ProductsOverviewScreen = ({ route, navigation }) => {
             }
           >
             <Button
-              title="View Details"
+              title="Detalii"
               color={Colors.accentColor}
               onPress={() =>
                 selectItemHandler(itemData.item.id, itemData.item.title)
               }
             />
             <Button
-              title="Add to cart"
+              title="Adaugă în coș"
               color={Colors.accentColor}
               onPress={() => dispatch(cartActions.addToCart(itemData.item))}
             />
