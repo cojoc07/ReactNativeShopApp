@@ -9,6 +9,7 @@ import {
   Platform,
   StyleSheet,
 } from "react-native";
+
 import Card from "../ui/Card";
 
 const ProductItem = (props) => {
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: 15,
-    marginTop: 10,
+    marginTop: 20,
   },
 });
 

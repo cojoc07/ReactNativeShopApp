@@ -16,6 +16,8 @@ import Colors from "../../constants/colors";
 import { useSelector, useDispatch } from "react-redux";
 import * as cartActions from "../../store/actions/cart";
 
+import { Chip } from "react-native-paper";
+
 const ProductDetailScreen = ({ route, navigation }) => {
   const { productId } = route.params;
   const selectedProduct = useSelector((state) =>
@@ -23,9 +25,9 @@ const ProductDetailScreen = ({ route, navigation }) => {
   );
 
   const dispatch = useDispatch();
-  const oraData =
-    "Adăugat pe " +
-    moment(selectedProduct.createDate).format("Do MMMM YYYY, HH:mm");
+  const oraData = moment(selectedProduct.createDate).format(
+    "Do MMM YYYY, HH:mm"
+  );
   return (
     <SafeAreaView>
       <ScrollView>
@@ -38,9 +40,46 @@ const ProductDetailScreen = ({ route, navigation }) => {
           source={{ uri: selectedProduct.imageUrl }}
         />
 
-        <View>
-          <Text>{oraData}</Text>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 20,
+            marginHorizontal: 20,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Chip
+              icon="information"
+              style={{ backgroundColor: Colors.primaryColor }}
+              textStyle={{ color: "white" }}
+              mode="outlined"
+              onPress={() => console.log("Pressed")}
+            >
+              {oraData}
+            </Chip>
+
+            <Chip
+              icon="information"
+              style={{ backgroundColor: Colors.primaryColor }}
+              textStyle={{ color: "white" }}
+              mode="outlined"
+              onPress={() => console.log("Pressed")}
+            >
+              Vânzător
+            </Chip>
+          </View>
         </View>
+        <Text style={styles.price}>{selectedProduct.price.toFixed(2)} Lei</Text>
+        <Text style={styles.description}>{selectedProduct.description}</Text>
         <View style={styles.actions}>
           <Button
             color={Colors.primaryColor}
@@ -50,8 +89,6 @@ const ProductDetailScreen = ({ route, navigation }) => {
             }}
           />
         </View>
-        <Text style={styles.price}>{selectedProduct.price.toFixed(2)} Lei</Text>
-        <Text style={styles.description}>{selectedProduct.description}</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -76,7 +113,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   actions: {
-    marginVertical: 10,
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginVertical: 15,
+    marginHorizontal: 20,
     alignItems: "center",
   },
 });
