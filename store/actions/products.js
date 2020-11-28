@@ -35,6 +35,8 @@ export const fetchProducts = () => {
           )
         );
       }
+
+      loadedProducts.sort((a, b) => a.createDate < b.createDate);
       //functia dispatch oferita de redux thunk
       dispatch({
         type: SET_PRODUCTS,

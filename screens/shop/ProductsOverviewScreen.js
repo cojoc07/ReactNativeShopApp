@@ -84,7 +84,6 @@ const ProductsOverviewScreen = ({ route, navigation }) => {
         barStyle={Platform.OS == "android" ? "auto" : "dark-content"}
       />
       <FlatList
-        //data={products.sort((a, b) => a.createDate < b.createDate)}
         data={products}
         onRefresh={loadProducts}
         refreshing={isRefreshing}
