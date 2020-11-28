@@ -27,6 +27,7 @@ export const fetchProducts = () => {
           new Product(
             key,
             resData[key].ownerId,
+            resData[key].createDate,
             resData[key].title,
             resData[key].imageUrl,
             resData[key].description,
@@ -75,6 +76,8 @@ export const createProduct = (title, description, imageUrl, price) => {
     //avem acces la state-ul curent folosind getState din redux thunk
     const userId = getState().auth.userId;
     const token = getState().auth.token;
+    const createDate = new Date();
+
     const response = await fetch(
       `***REMOVED***/products.json?auth=${token}`,
       {
@@ -86,6 +89,7 @@ export const createProduct = (title, description, imageUrl, price) => {
           imageUrl: imageUrl,
           price: price,
           ownerId: userId,
+          createDate: createDate,
         }),
       }
     );
@@ -101,6 +105,7 @@ export const createProduct = (title, description, imageUrl, price) => {
         imageUrl: imageUrl,
         price: price,
         ownerId: userId,
+        createDate: createDate,
       },
     });
   };
@@ -116,7 +121,12 @@ export const updateProduct = (id, title, description, imageUrl, price) => {
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title, description, imageUrl, price }),
+          body: JSON.stringify({
+            title,
+            description,
+            imageUrl,
+            price,
+          }),
         }
       );
       //functia dispatch oferita de redux thunk

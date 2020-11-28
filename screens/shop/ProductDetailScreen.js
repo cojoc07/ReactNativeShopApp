@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 import {
   View,
@@ -22,7 +23,9 @@ const ProductDetailScreen = ({ route, navigation }) => {
   );
 
   const dispatch = useDispatch();
-
+  const oraData =
+    "Adăugat pe " +
+    moment(selectedProduct.createDate).format("Do MMMM YYYY, HH:mm");
   return (
     <SafeAreaView>
       <ScrollView>
@@ -34,6 +37,10 @@ const ProductDetailScreen = ({ route, navigation }) => {
           style={styles.image}
           source={{ uri: selectedProduct.imageUrl }}
         />
+
+        <View>
+          <Text>{oraData}</Text>
+        </View>
         <View style={styles.actions}>
           <Button
             color={Colors.primaryColor}
@@ -43,8 +50,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
             }}
           />
         </View>
-
-        <Text style={styles.price}>${selectedProduct.price.toFixed(2)}</Text>
+        <Text style={styles.price}>{selectedProduct.price.toFixed(2)} Lei</Text>
         <Text style={styles.description}>{selectedProduct.description}</Text>
       </ScrollView>
     </SafeAreaView>

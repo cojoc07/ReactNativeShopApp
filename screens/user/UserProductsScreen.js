@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from "react-native";
 import ProductItem from "../../components/shop/ProductItem";
@@ -67,6 +68,7 @@ const UserProductsScreen = ({ route, navigation }) => {
   return (
     <FlatList
       data={userProducts}
+      numColumns={2}
       keyExtractor={(item) => item.id}
       renderItem={(itemData) => (
         <ProductItem
@@ -77,18 +79,35 @@ const UserProductsScreen = ({ route, navigation }) => {
             editProductHandler(itemData.item.id);
           }}
         >
-          <Button
-            title="Editează produs"
-            color={Colors.accentColor}
-            onPress={() => {
-              editProductHandler(itemData.item.id);
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
-          />
-          <Button
-            title="Șterge produs"
-            color={Colors.accentColor}
-            onPress={() => deleteProductHandler(itemData.item.id)}
-          />
+          >
+            <TouchableOpacity
+              style={{
+                ...styles.touchableButton,
+                backgroundColor: Colors.primaryColor,
+              }}
+              onPress={() =>
+                editProductHandler(itemData.item.id, itemData.item.title)
+              }
+            >
+              <Text style={{ fontFamily: "open-sans", color: "#FFF" }}>
+                Edit
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.touchableButton}
+              onPress={() => deleteProductHandler(itemData.item.id)}
+            >
+              <Text style={{ fontFamily: "open-sans", color: "#FFF" }}>
+                Șterge
+              </Text>
+            </TouchableOpacity>
+          </View>
         </ProductItem>
       )}
     />
@@ -100,6 +119,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  touchableButton: {
+    backgroundColor: Colors.accentColor,
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    height: 30,
+    justifyContent: "center",
   },
   label: {
     marginTop: 20,

@@ -29,7 +29,10 @@ const ProductItem = (props) => {
             <Text numberOfLines={1} style={styles.title}>
               {props.title}
             </Text>
-            <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+            <Text style={styles.price}>
+              {props.price.toFixed(2)}{" "}
+              {props.price < 2 ? (props.price < 1 ? "Lei" : "Leu") : "Lei"}
+            </Text>
             <View style={styles.actions}>{props.children}</View>
           </View>
         </TouchableComponent>
@@ -40,8 +43,11 @@ const ProductItem = (props) => {
 
 const styles = StyleSheet.create({
   product: {
-    height: 300,
-    margin: 20,
+    flex: 1,
+    justifyContent: "space-between",
+    height: 250,
+    marginVertical: 15,
+    marginHorizontal: 7.5,
   },
   touchable: {
     overflow: "hidden",
@@ -53,7 +59,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     overflow: "hidden",
     width: "100%",
-    height: "60%",
+    height: "50%",
   },
   image: {
     width: "100%",

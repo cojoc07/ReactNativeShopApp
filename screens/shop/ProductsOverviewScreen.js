@@ -7,6 +7,7 @@ import {
   Text,
   Platform,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -83,22 +84,57 @@ const ProductsOverviewScreen = ({ route, navigation }) => {
         barStyle={Platform.OS == "android" ? "auto" : "dark-content"}
       />
       <FlatList
+        //data={products.sort((a, b) => a.createDate < b.createDate)}
         data={products}
         onRefresh={loadProducts}
         refreshing={isRefreshing}
         keyExtractor={(item) => item.id}
+        numColumns={2}
         renderItem={(itemData) => (
           <ProductItem
             image={itemData.item.imageUrl}
             title={itemData.item.title}
             price={itemData.item.price}
+            style={
+              products.length % 2 == 0
+                ? { borderColor: "red" }
+                : { borderColor: "green" }
+            }
             onSelect={() =>
               selectItemHandler(itemData.item.id, itemData.item.title)
             }
           >
-            <Button
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <TouchableOpacity
+                style={styles.touchableButton}
+                onPress={() =>
+                  selectItemHandler(itemData.item.id, itemData.item.title)
+                }
+              >
+                <Text style={{ fontFamily: "open-sans", color: "#FFF" }}>
+                  Detalii
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.touchableButton}
+                onPress={() => dispatch(cartActions.addToCart(itemData.item))}
+              >
+                <Text style={{ fontFamily: "open-sans", color: "#FFF" }}>
+                  În coș
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/*  <Button
               title="Detalii"
               color={Colors.accentColor}
+              
               onPress={() =>
                 selectItemHandler(itemData.item.id, itemData.item.title)
               }
@@ -107,7 +143,7 @@ const ProductsOverviewScreen = ({ route, navigation }) => {
               title="Adaugă în coș"
               color={Colors.accentColor}
               onPress={() => dispatch(cartActions.addToCart(itemData.item))}
-            />
+            /> */}
           </ProductItem>
         )}
       />
@@ -120,6 +156,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  touchableButton: {
+    backgroundColor: Colors.accentColor,
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    height: 30,
+    justifyContent: "center",
   },
 });
 
