@@ -27,6 +27,7 @@ export const fetchProducts = () => {
           new Product(
             key,
             resData[key].ownerId,
+            resData[key].soldBy,
             resData[key].createDate,
             resData[key].title,
             resData[key].imageUrl,
@@ -77,6 +78,7 @@ export const createProduct = (title, description, imageUrl, price) => {
   return async (dispatch, getState) => {
     //avem acces la state-ul curent folosind getState din redux thunk
     const userId = getState().auth.userId;
+    const userEmail = getState().auth.userEmail;
     const token = getState().auth.token;
     const createDate = new Date();
 
@@ -92,6 +94,7 @@ export const createProduct = (title, description, imageUrl, price) => {
           price: price,
           ownerId: userId,
           createDate: createDate,
+          soldBy: userEmail,
         }),
       }
     );
@@ -107,6 +110,7 @@ export const createProduct = (title, description, imageUrl, price) => {
         imageUrl: imageUrl,
         price: price,
         ownerId: userId,
+        soldBy: userEmail,
         createDate: createDate,
       },
     });

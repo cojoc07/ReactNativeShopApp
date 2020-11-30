@@ -11,6 +11,7 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
+  Alert,
 } from "react-native";
 import Colors from "../../constants/colors";
 import { useSelector, useDispatch } from "react-redux";
@@ -72,9 +73,17 @@ const ProductDetailScreen = ({ route, navigation }) => {
               style={{ backgroundColor: Colors.primaryColor }}
               textStyle={{ color: "white" }}
               mode="outlined"
-              onPress={() => console.log("Pressed")}
+              onPress={() =>
+                Alert.alert(
+                  "Informatii",
+                  `Acest produs este vândut de utilizatorul ${selectedProduct.soldBy}`
+                )
+              }
             >
-              Vânzător
+              {selectedProduct.soldBy.substring(
+                0,
+                selectedProduct.soldBy.indexOf("@")
+              )}
             </Chip>
           </View>
         </View>

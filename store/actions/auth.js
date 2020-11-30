@@ -74,20 +74,27 @@ export const login = (email, password) => {
     }
 
     const resData = await response.json();
-    dispatch({ type: SIGNUP, token: resData.idToken, userId: resData.localId });
+    console.log(resData);
+    dispatch({
+      type: SIGNUP,
+      token: resData.idToken,
+      userId: resData.localId,
+      userEmail: resData.email,
+    });
     const expirationDate = new Date(
       new Date().getTime() + parseInt(resData.expiresIn) * 1000
     );
-    saveData(resData.idToken, resData.localId, expirationDate);
+    saveData(resData.idToken, resData.localId, resData.email, expirationDate);
   };
 };
 
-const saveData = (token, userId, expirationDate) => {
+const saveData = (token, userId, email, expirationDate) => {
   AsyncStorage.setItem(
     "userData",
     JSON.stringify({
       token: token,
       userId: userId,
+      userEmail: email,
       expirationDate: expirationDate.toISOString(),
     })
   );
