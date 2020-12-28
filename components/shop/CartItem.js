@@ -20,7 +20,7 @@ const CartItem = (props) => {
         </Text>
       </View>
       <View style={styles.itemData}>
-        <Text style={styles.price}>${props.amount.toFixed(2)}</Text>
+        <Text style={styles.price}>Lei {props.amount.toFixed(2)}</Text>
         <TouchableOpacity onPress={props.onRemove} style={styles.deleteButton}>
           {props.canDelete && (
             <Icon
@@ -39,10 +39,12 @@ const CartItem = (props) => {
 const styles = StyleSheet.create({
   cartItem: {
     padding: 10,
+    borderRadius: 15,
     backgroundColor: "white",
     flexDirection: "row",
     justifyContent: "space-between",
     marginHorizontal: 5,
+    marginBottom: 5,
   },
   itemData: {
     flexDirection: "row",

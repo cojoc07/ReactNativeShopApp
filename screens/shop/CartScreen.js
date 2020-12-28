@@ -54,14 +54,14 @@ const CartScreen = (props) => {
       <Card style={styles.summary}>
         <Text style={styles.summaryText}>
           Total:{" "}
-          <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
+          <Text style={styles.amount}>{cartTotalAmount.toFixed(2)} Lei</Text>
         </Text>
 
         {isLoading ? (
           <ActivityIndicator size="small" color={Colors.primaryColor} />
         ) : (
           <Button
-            title="Order now"
+            title="Comandă"
             disabled={cartItems.length === 0}
             onPress={sendOrder}
           />
