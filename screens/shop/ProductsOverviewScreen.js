@@ -94,11 +94,7 @@ const ProductsOverviewScreen = ({ route, navigation }) => {
             image={itemData.item.imageUrl}
             title={itemData.item.title}
             price={itemData.item.price}
-            style={
-              products.length % 2 == 0
-                ? { borderColor: "red" }
-                : { borderColor: "green" }
-            }
+            style={{ width: 150 }}
             onSelect={() =>
               selectItemHandler(itemData.item.id, itemData.item.title)
             }

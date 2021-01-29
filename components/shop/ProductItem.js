@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Button,
+  Dimensions,
   View,
   Text,
   Image,
@@ -11,6 +12,7 @@ import {
 } from "react-native";
 
 import Card from "../ui/Card";
+const windowWidth = Dimensions.get("window").width;
 
 const ProductItem = (props) => {
   let TouchableComponent =
@@ -31,7 +33,7 @@ const ProductItem = (props) => {
               {props.title}
             </Text>
             <Text style={styles.price}>
-              {props.price.toFixed(2)}{" "}
+              {props?.price?.toFixed(2)}{" "}
               {props.price < 2 ? (props.price < 1 ? "Lei" : "Leu") : "Lei"}
             </Text>
             <View style={styles.actions}>{props.children}</View>
@@ -44,7 +46,7 @@ const ProductItem = (props) => {
 
 const styles = StyleSheet.create({
   product: {
-    flex: 1,
+    width: windowWidth / 2 - 15,
     justifyContent: "space-between",
     height: 250,
     marginVertical: 15,

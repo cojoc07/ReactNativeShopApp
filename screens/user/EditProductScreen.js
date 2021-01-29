@@ -115,7 +115,7 @@ const EditProductScreen = ({ route, navigation }) => {
           <Icon
             type="ionicon"
             size={42}
-            width={20}
+            width={40}
             name={Platform.OS === "ios" ? "ios-checkmark" : "md-checkmark"}
           />
         </TouchableOpacity>
@@ -213,7 +213,7 @@ const EditProductScreen = ({ route, navigation }) => {
             <Text style={styles.label}>Price</Text>
             <TextInput
               style={styles.input}
-              value={price.toString()}
+              value={price?.toString()}
               onChangeText={(text) => inputChangeHandler(text, "price")}
               keyboardType="decimal-pad"
             />

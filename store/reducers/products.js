@@ -35,8 +35,12 @@ export default (state = initialState, action) => {
       );
       return {
         ...state,
-        availableProducts: state.availableProducts.concat(newProduct),
-        userProducts: state.userProducts.concat(newProduct),
+        availableProducts: state.availableProducts
+          .concat(newProduct)
+          .sort((a, b) => (a.createDate < b.createDate ? 1 : -1)),
+        userProducts: state.userProducts
+          .concat(newProduct)
+          .sort((a, b) => (a.createDate < b.createDate ? 1 : -1)),
       };
     }
 
@@ -48,6 +52,7 @@ export default (state = initialState, action) => {
       const updatedProduct = new Product(
         action.pid,
         state.userProducts[productIndex].ownerId,
+        action.productData.soldBy,
         action.productData.createDate,
         action.productData.title,
         action.productData.imageUrl,

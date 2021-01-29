@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as constants from "../../constants/constants";
 
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
@@ -11,7 +12,7 @@ export const setCredentials = (token, userId) => {
 export const signup = (email, password) => {
   return async (dispatch) => {
     const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=***REMOVED***",
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${constants.default.apikey}`,
       {
         method: "POST",
         headers: {
@@ -47,7 +48,7 @@ export const signup = (email, password) => {
 export const login = (email, password) => {
   return async (dispatch) => {
     const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=***REMOVED***",
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${constants.default.apikey}`,
       {
         method: "POST",
         headers: {
@@ -74,7 +75,7 @@ export const login = (email, password) => {
     }
 
     const resData = await response.json();
-    console.log(resData);
+
     dispatch({
       type: SIGNUP,
       token: resData.idToken,

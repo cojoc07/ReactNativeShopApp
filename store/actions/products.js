@@ -1,4 +1,5 @@
 import Product from "../../models/product";
+import * as constants from "../../constants/constants";
 
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
@@ -11,9 +12,7 @@ export const fetchProducts = () => {
   return async (dispatch, getState) => {
     const userId = getState().auth.userId;
     try {
-      const response = await fetch(
-        "***REMOVED***/products.json"
-      );
+      const response = await fetch(`${constants.default.url}/products.json`);
 
       if (!response.ok) {
         throw new Error("Error while fetching.");
@@ -37,7 +36,7 @@ export const fetchProducts = () => {
         );
       }
 
-      loadedProducts.sort((a, b) => a.createDate < b.createDate);
+      loadedProducts.sort((a, b) => (a.createDate < b.createDate ? 1 : -1));
       //functia dispatch oferita de redux thunk
       dispatch({
         type: SET_PRODUCTS,
@@ -57,7 +56,7 @@ export const deleteProduct = (productId) => {
     //avem acces la state-ul curent folosind getState din redux thunk
     const token = getState().auth.token;
     const response = await fetch(
-      `***REMOVED***/products/${productId}.json?auth=${token}`,
+      `${constants.default.url}/products/${productId}.json?auth=${token}`,
       {
         method: "DELETE",
       }
@@ -83,7 +82,7 @@ export const createProduct = (title, description, imageUrl, price) => {
     const createDate = new Date();
 
     const response = await fetch(
-      `***REMOVED***/products.json?auth=${token}`,
+      `${constants.default.url}/products.json?auth=${token}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -121,9 +120,12 @@ export const updateProduct = (id, title, description, imageUrl, price) => {
   return async (dispatch, getState) => {
     //avem acces la state-ul curent folosind getState din redux thunk
     const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const userEmail = getState().auth.userEmail;
+
     try {
       await fetch(
-        `***REMOVED***/products/${id}.json?auth=${token}`,
+        `${constants.default.url}/products/${id}.json?auth=${token}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -146,6 +148,8 @@ export const updateProduct = (id, title, description, imageUrl, price) => {
           description: description,
           imageUrl: imageUrl,
           price: price,
+          soldBy: userEmail,
+          ownerId: userId,
         },
       });
     } catch (err) {

@@ -1,4 +1,5 @@
 import Order from "../../models/order";
+import * as constants from "../../constants/constants";
 
 export const ADD_ORDER = "ADD_ORDER";
 export const SET_ORDERS = "SET_ORDERS";
@@ -9,7 +10,7 @@ export const fetchOrders = () => {
 
     try {
       const response = await fetch(
-        `***REMOVED***/orders/${userId}.json`
+        `${constants.default.url}/orders/${userId}.json`
       );
 
       if (!response.ok) {
@@ -43,7 +44,7 @@ export const addOrder = (cartItems, totalAmount) => {
     const userId = getState().auth.userId;
     const token = getState().auth.token;
     const response = await fetch(
-      `***REMOVED***/orders/${userId}.json?auth=${token}`,
+      `${constants.default.url}/orders/${userId}.json?auth=${token}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
