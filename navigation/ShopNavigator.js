@@ -298,8 +298,7 @@ const StartupScreen = () => {
     checkCredentials();
   }, []);
 
-  //const isAuth = useSelector((state) => state.auth?.userId);
-  const isAuth = true;
+  const isAuth = useSelector((state) => state.auth?.userId);
 
   return (
     <NavigationContainer>
