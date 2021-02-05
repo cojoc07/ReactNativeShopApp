@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Alert,
-  ActivityIndicator,
-  Button,
   TextInput,
   View,
   KeyboardAvoidingView,
@@ -10,6 +8,8 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
+import { Button } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import { useDispatch } from "react-redux";
 import Colors from "../../constants/colors";
@@ -112,30 +112,29 @@ const AuthScreen = ({ route, navigation }) => {
               value={password}
               onChangeText={(text) => inputChangeHandler(text, "password")}
             />
-            {/*    {!passwordIsValid && (
-              <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>Parolă invalidă.</Text>
-              </View>
-            )} */}
 
-            {isLoading && (
-              <ActivityIndicator size="small" color={Colors.primaryColor} />
-            )}
             <View style={styles.buttonContainer}>
-              <View style={styles.button}>
-                <Button
-                  title={isSignup ? "Înregistrare" : "Logare"}
-                  color={Colors.primaryColor}
-                  onPress={authHandler}
-                />
-              </View>
-              <View style={styles.button}>
-                <Button
-                  title={isSignup ? "Ai deja cont?" : "Nu ai cont?"}
-                  color={Colors.accentColor}
-                  onPress={() => setIsSignup((prevState) => !prevState)}
-                />
-              </View>
+              <Button
+                title={isSignup ? "Înregistrare" : "Logare"}
+                onPress={authHandler}
+                loading={isLoading}
+                buttonStyle={{
+                  backgroundColor: Colors.primaryColor,
+                  borderRadius: 20,
+                  width: 160,
+                  marginBottom: 10,
+                }}
+              />
+
+              <Button
+                title={isSignup ? "Ai deja cont?" : "Nu ai cont?"}
+                onPress={() => setIsSignup((prevState) => !prevState)}
+                buttonStyle={{
+                  backgroundColor: Colors.accentColor,
+                  borderRadius: 20,
+                  width: 160,
+                }}
+              />
             </View>
           </ScrollView>
         </Card>
@@ -164,7 +163,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
