@@ -10,11 +10,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-<<<<<<< HEAD
 import * as Animatable from "react-native-animatable";
 import TouchableScale from "react-native-touchable-scale";
-=======
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
 import { useSelector, useDispatch } from "react-redux";
 
 import ProductItem from "../../components/shop/ProductItem";
@@ -82,7 +79,6 @@ const ProductsOverviewScreen = ({ route, navigation }) => {
     );
   }
 
-<<<<<<< HEAD
   const renderElement = (item, index) => {
     console.log("indexul: " + index);
     return (
@@ -145,8 +141,6 @@ const ProductsOverviewScreen = ({ route, navigation }) => {
     );
   };
 
-=======
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
   return (
     <View>
       <StatusBar
@@ -159,62 +153,7 @@ const ProductsOverviewScreen = ({ route, navigation }) => {
         refreshing={isRefreshing}
         keyExtractor={(item) => item.id}
         numColumns={2}
-<<<<<<< HEAD
         renderItem={({ item, index }) => renderElement(item, index)}
-=======
-        renderItem={(itemData) => (
-          <ProductItem
-            image={itemData.item.imageUrl}
-            title={itemData.item.title}
-            price={itemData.item.price}
-            style={{ width: 150 }}
-            onSelect={() =>
-              selectItemHandler(itemData.item.id, itemData.item.title)
-            }
-          >
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <TouchableOpacity
-                style={styles.touchableButton}
-                onPress={() =>
-                  selectItemHandler(itemData.item.id, itemData.item.title)
-                }
-              >
-                <Text style={{ fontFamily: "open-sans", color: "#FFF" }}>
-                  Detalii
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.touchableButton}
-                onPress={() => dispatch(cartActions.addToCart(itemData.item))}
-              >
-                <Text style={{ fontFamily: "open-sans", color: "#FFF" }}>
-                  În coș
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            {/*  <Button
-              title="Detalii"
-              color={Colors.accentColor}
-              
-              onPress={() =>
-                selectItemHandler(itemData.item.id, itemData.item.title)
-              }
-            />
-            <Button
-              title="Adaugă în coș"
-              color={Colors.accentColor}
-              onPress={() => dispatch(cartActions.addToCart(itemData.item))}
-            /> */}
-          </ProductItem>
-        )}
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
       />
     </View>
   );

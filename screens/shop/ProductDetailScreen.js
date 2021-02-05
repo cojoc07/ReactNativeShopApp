@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 import React, { useRef, useMemo, useCallback, useState } from "react";
 import moment from "moment";
 import { Button as Button2 } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Input } from "react-native-elements";
-=======
-import React from "react";
-import moment from "moment";
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
 
 import {
   View,
@@ -27,10 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as cartActions from "../../store/actions/cart";
 
 import { Chip } from "react-native-paper";
-<<<<<<< HEAD
 import BottomSheet from "@gorhom/bottom-sheet";
-=======
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
 
 const ProductDetailScreen = ({ route, navigation }) => {
   const { productId } = route.params;
@@ -54,17 +45,11 @@ const ProductDetailScreen = ({ route, navigation }) => {
   }, []);
 
   const dispatch = useDispatch();
-<<<<<<< HEAD
 
   const oraData = moment(selectedProduct.createDate).format(
     "Do MMM YYYY, HH:mm"
   );
 
-=======
-  const oraData = moment(selectedProduct.createDate).format(
-    "Do MMM YYYY, HH:mm"
-  );
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
   return (
     <SafeAreaView>
       <ScrollView style={{ height: "100%" }}>
@@ -94,48 +79,6 @@ const ProductDetailScreen = ({ route, navigation }) => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
-<<<<<<< HEAD
-=======
-            }}
-          >
-            <Chip
-              icon="information"
-              style={{ backgroundColor: Colors.primaryColor }}
-              textStyle={{ color: "white" }}
-              mode="outlined"
-              onPress={() => console.log("Pressed")}
-            >
-              {oraData}
-            </Chip>
-
-            <Chip
-              icon="information"
-              style={{ backgroundColor: Colors.primaryColor }}
-              textStyle={{ color: "white" }}
-              mode="outlined"
-              onPress={() =>
-                Alert.alert(
-                  "Informatii",
-                  `Acest produs este vândut de utilizatorul ${selectedProduct.soldBy}`
-                )
-              }
-            >
-              {selectedProduct.soldBy.substring(
-                0,
-                selectedProduct.soldBy.indexOf("@")
-              )}
-            </Chip>
-          </View>
-        </View>
-        <Text style={styles.price}>{selectedProduct.price.toFixed(2)} Lei</Text>
-        <Text style={styles.description}>{selectedProduct.description}</Text>
-        <View style={styles.actions}>
-          <Button
-            color={Colors.primaryColor}
-            title="Adaugă în coș"
-            onPress={() => {
-              dispatch(cartActions.addToCart(selectedProduct));
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
             }}
           >
             <Chip
@@ -167,12 +110,9 @@ const ProductDetailScreen = ({ route, navigation }) => {
             </Chip>
           </View>
         </View>
-<<<<<<< HEAD
 
         <Text style={styles.price}>{selectedProduct.price.toFixed(2)} Lei</Text>
         <Text style={styles.description}>{selectedProduct.description}</Text>
-=======
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
       </ScrollView>
       <View style={styles.actions}>
         <View
@@ -259,7 +199,6 @@ const styles = StyleSheet.create({
     marginBottom: 100,
   },
   actions: {
-<<<<<<< HEAD
     padding: 5,
     backgroundColor: "#f2f2f2",
     position: "absolute",
@@ -278,13 +217,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-=======
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginVertical: 15,
-    marginHorizontal: 20,
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
     alignItems: "center",
   },
 });

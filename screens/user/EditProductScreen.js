@@ -3,11 +3,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   Alert,
   ActivityIndicator,
-<<<<<<< HEAD
   Button,
   Image,
-=======
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
   View,
   KeyboardAvoidingView,
   Text,
@@ -22,20 +19,14 @@ import * as productActions from "../../store/actions/products";
 import { Icon } from "react-native-elements";
 import Colors from "../../constants/colors";
 
-<<<<<<< HEAD
 import * as ImagePicker from "expo-image-picker";
 
-=======
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
 const EditProductScreen = ({ route, navigation }) => {
   //daca avem product id in ruta, editam produs existent
   const prodId = route.params?.productId;
 
-<<<<<<< HEAD
   const [image, setImage] = useState(null);
 
-=======
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === prodId)
   );
@@ -71,7 +62,6 @@ const EditProductScreen = ({ route, navigation }) => {
     }
   }, [error]);
 
-<<<<<<< HEAD
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -100,8 +90,6 @@ const EditProductScreen = ({ route, navigation }) => {
     }
   };
 
-=======
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
   const submitHandler = useCallback(async () => {
     if (!titleIsValid) {
       Alert.alert("Wrong input", "Please check the errors on the form");
@@ -278,7 +266,6 @@ const EditProductScreen = ({ route, navigation }) => {
               numberOfLines={3}
               onChangeText={(text) => inputChangeHandler(text, "description")}
             />
-<<<<<<< HEAD
             <View
               style={{
                 flex: 1,
@@ -297,8 +284,6 @@ const EditProductScreen = ({ route, navigation }) => {
                 />
               )}
             </View>
-=======
->>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
             {!descriptionIsValid && (
               <View style={styles.errorContainer}>
                 <Text style={{ color: "red" }}>Description is invalid.</Text>
