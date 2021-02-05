@@ -11,6 +11,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
+import * as Animatable from "react-native-animatable";
 import ProductItem from "../../components/shop/ProductItem";
 import { useSelector, useDispatch } from "react-redux";
 import * as productActions from "../../store/actions/products";
@@ -65,51 +67,55 @@ const UserProductsScreen = ({ route, navigation }) => {
     }
   }
 
+  const renderElement = (item, index) => (
+    <Animatable.View
+      duration={1200}
+      delay={500 + index * 200}
+      animation="zoomIn"
+    >
+      <ProductItem
+        image={item.imageUrl}
+        title={item.title}
+        price={item.price}
+        onSelect={() => {
+          editProductHandler(item.id);
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              ...styles.touchableButton,
+              backgroundColor: Colors.primaryColor,
+            }}
+            onPress={() => editProductHandler(item.id, item.title)}
+          >
+            <Text style={{ fontFamily: "open-sans", color: "#FFF" }}>Edit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.touchableButton}
+            onPress={() => deleteProductHandler(item.id)}
+          >
+            <Text style={{ fontFamily: "open-sans", color: "#FFF" }}>
+              Șterge
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ProductItem>
+    </Animatable.View>
+  );
+
   return (
     <FlatList
       data={userProducts}
       numColumns={2}
       keyExtractor={(item) => item.id}
-      renderItem={(itemData) => (
-        <ProductItem
-          image={itemData.item.imageUrl}
-          title={itemData.item.title}
-          price={itemData.item.price}
-          onSelect={() => {
-            editProductHandler(itemData.item.id);
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                ...styles.touchableButton,
-                backgroundColor: Colors.primaryColor,
-              }}
-              onPress={() =>
-                editProductHandler(itemData.item.id, itemData.item.title)
-              }
-            >
-              <Text style={{ fontFamily: "open-sans", color: "#FFF" }}>
-                Edit
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.touchableButton}
-              onPress={() => deleteProductHandler(itemData.item.id)}
-            >
-              <Text style={{ fontFamily: "open-sans", color: "#FFF" }}>
-                Șterge
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ProductItem>
-      )}
+      renderItem={({ item, index }) => renderElement(item, index)}
     />
   );
 };

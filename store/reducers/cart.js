@@ -4,7 +4,7 @@ import { DELETE_PRODUCT } from "../actions/products";
 import CartItem from "../../models/cart-item";
 
 const initialState = {
-  items: {},
+  items: [],
   totalAmount: 0,
 };
 
@@ -12,6 +12,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART: {
       const addedProduct = action.product;
+      const quantity = action.quantity;
       const prodPrice = addedProduct.price;
       const prodTitle = addedProduct.title;
 
@@ -20,18 +21,24 @@ export default (state = initialState, action) => {
       if (state.items[addedProduct.id]) {
         //if item exists in the cart
         updatedOrNewCartItem = new CartItem(
-          state.items[addedProduct.id].quantity + 1,
+          state.items[addedProduct.id].quantity + quantity,
           prodPrice,
           prodTitle,
-          state.items[addedProduct.id].sum + prodPrice
+          state.items[addedProduct.id].sum + prodPrice * quantity
         );
       } else {
-        updatedOrNewCartItem = new CartItem(1, prodPrice, prodTitle, prodPrice);
+        //new cart item
+        updatedOrNewCartItem = new CartItem(
+          quantity,
+          prodPrice,
+          prodTitle,
+          prodPrice * quantity
+        );
       }
       return {
         ...state,
         items: { ...state.items, [addedProduct.id]: updatedOrNewCartItem },
-        totalAmount: state.totalAmount + prodPrice,
+        totalAmount: state.totalAmount + prodPrice * quantity,
       };
     }
 

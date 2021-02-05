@@ -3,6 +3,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   Alert,
   ActivityIndicator,
+  Button,
+  Image,
   View,
   KeyboardAvoidingView,
   Text,
@@ -17,9 +19,13 @@ import * as productActions from "../../store/actions/products";
 import { Icon } from "react-native-elements";
 import Colors from "../../constants/colors";
 
+import * as ImagePicker from "expo-image-picker";
+
 const EditProductScreen = ({ route, navigation }) => {
   //daca avem product id in ruta, editam produs existent
   const prodId = route.params?.productId;
+
+  const [image, setImage] = useState(null);
 
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === prodId)
@@ -55,6 +61,34 @@ const EditProductScreen = ({ route, navigation }) => {
       Alert.alert("An error occurred!", error.message);
     }
   }, [error]);
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   const submitHandler = useCallback(async () => {
     if (!titleIsValid) {
@@ -232,6 +266,24 @@ const EditProductScreen = ({ route, navigation }) => {
               numberOfLines={3}
               onChangeText={(text) => inputChangeHandler(text, "description")}
             />
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                title="Pick an image from camera roll"
+                onPress={pickImage}
+              />
+              {image && (
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: 200, height: 200 }}
+                />
+              )}
+            </View>
             {!descriptionIsValid && (
               <View style={styles.errorContainer}>
                 <Text style={{ color: "red" }}>Description is invalid.</Text>
