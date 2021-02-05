@@ -3,6 +3,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   Alert,
   ActivityIndicator,
+<<<<<<< HEAD
+  Button,
+  Image,
+=======
+>>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
   View,
   KeyboardAvoidingView,
   Text,
@@ -17,10 +22,20 @@ import * as productActions from "../../store/actions/products";
 import { Icon } from "react-native-elements";
 import Colors from "../../constants/colors";
 
+<<<<<<< HEAD
+import * as ImagePicker from "expo-image-picker";
+
+=======
+>>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
 const EditProductScreen = ({ route, navigation }) => {
   //daca avem product id in ruta, editam produs existent
   const prodId = route.params?.productId;
 
+<<<<<<< HEAD
+  const [image, setImage] = useState(null);
+
+=======
+>>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === prodId)
   );
@@ -56,6 +71,37 @@ const EditProductScreen = ({ route, navigation }) => {
     }
   }, [error]);
 
+<<<<<<< HEAD
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+=======
+>>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
   const submitHandler = useCallback(async () => {
     if (!titleIsValid) {
       Alert.alert("Wrong input", "Please check the errors on the form");
@@ -232,6 +278,27 @@ const EditProductScreen = ({ route, navigation }) => {
               numberOfLines={3}
               onChangeText={(text) => inputChangeHandler(text, "description")}
             />
+<<<<<<< HEAD
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                title="Pick an image from camera roll"
+                onPress={pickImage}
+              />
+              {image && (
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: 200, height: 200 }}
+                />
+              )}
+            </View>
+=======
+>>>>>>> 968011327f9785bbb767ceac899a99f8ac5f294a
             {!descriptionIsValid && (
               <View style={styles.errorContainer}>
                 <Text style={{ color: "red" }}>Description is invalid.</Text>
