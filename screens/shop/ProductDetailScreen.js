@@ -41,7 +41,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 
   // callbacks
   const handleSheetChanges = useCallback((index) => {
-    console.log("handleSheetChanges", index);
+    //console.log("handleSheetChanges", index);
   }, []);
 
   const dispatch = useDispatch();
@@ -60,7 +60,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 
         <Image
           style={styles.image}
-          resizeMode="cover"
+          resizeMode="contain"
           source={{ uri: selectedProduct.imageUrl }}
         />
 
@@ -181,6 +181,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   image: {
+    backgroundColor: "white",
     width: "100%",
     height: 400,
   },

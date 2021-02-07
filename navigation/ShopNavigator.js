@@ -197,6 +197,7 @@ const MyTabScreens = () => {
       tabBarOptions={{
         activeTintColor: Colors.accentColor,
         inactiveTintColor: "gray",
+        initialRouteName: "Produse",
       }}
       initialRouteName="Home"
       /* activeColor="#f0edf6"
@@ -296,7 +297,7 @@ const StartupScreen = () => {
       );
     };
     checkCredentials();
-  }, []);
+  }, [dispatch]);
 
   const isAuth = useSelector((state) => state.auth?.userId);
   //const isAuth = true;

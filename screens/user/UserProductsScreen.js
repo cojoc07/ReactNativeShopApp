@@ -23,7 +23,6 @@ const UserProductsScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
 
   const userProducts = useSelector((state) => state.products.userProducts);
-
   const editProductHandler = (id) => {
     navigation.navigate("EditProductScreen", {
       productId: id,

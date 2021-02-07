@@ -1,4 +1,5 @@
 import Product from "../../models/product";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as constants from "../../constants/constants";
 
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
@@ -77,7 +78,10 @@ export const createProduct = (title, description, imageUrl, price) => {
   return async (dispatch, getState) => {
     //avem acces la state-ul curent folosind getState din redux thunk
     const userId = getState().auth.userId;
-    const userEmail = getState().auth.userEmail;
+    const userData = await AsyncStorage.getItem("userData");
+    const transformedData = JSON.parse(userData);
+    const { userEmail } = transformedData;
+
     const token = getState().auth.token;
     const createDate = new Date();
 
@@ -120,9 +124,10 @@ export const updateProduct = (id, title, description, imageUrl, price) => {
   return async (dispatch, getState) => {
     //avem acces la state-ul curent folosind getState din redux thunk
     const token = getState().auth.token;
-    const userId = getState().auth.userId;
-    const userEmail = getState().auth.userEmail;
 
+    const currentProd = getState().products.availableProducts.find(
+      (prod) => prod.id === id
+    );
     try {
       await fetch(
         `${constants.default.url}/products/${id}.json?auth=${token}`,
@@ -140,6 +145,7 @@ export const updateProduct = (id, title, description, imageUrl, price) => {
       //functia dispatch oferita de redux thunk
       //
       //functia este invelita automat in THEN deoarece fetch are AWAIT
+
       dispatch({
         type: UPDATE_PRODUCT,
         pid: id,
@@ -148,8 +154,8 @@ export const updateProduct = (id, title, description, imageUrl, price) => {
           description: description,
           imageUrl: imageUrl,
           price: price,
-          soldBy: userEmail,
-          ownerId: userId,
+          soldBy: currentProd.soldBy,
+          ownerId: currentProd.ownerId,
         },
       });
     } catch (err) {

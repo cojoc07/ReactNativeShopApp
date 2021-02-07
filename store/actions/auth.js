@@ -85,7 +85,7 @@ export const login = (email, password) => {
     const expirationDate = new Date(
       new Date().getTime() + parseInt(resData.expiresIn) * 1000
     );
-    saveData(resData.idToken, resData.localId, resData.email, expirationDate);
+    saveData(resData.idToken, resData.localId, email, expirationDate);
   };
 };
 

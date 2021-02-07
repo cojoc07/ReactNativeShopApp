@@ -87,6 +87,7 @@ const EditProductScreen = ({ route, navigation }) => {
 
     if (!result.cancelled) {
       setImage(result.uri);
+      //uploadImage(result.uri;)
     }
   };
 

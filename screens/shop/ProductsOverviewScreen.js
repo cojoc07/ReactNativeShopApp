@@ -80,7 +80,6 @@ const ProductsOverviewScreen = ({ route, navigation }) => {
   }
 
   const renderElement = (item, index) => {
-    console.log("indexul: " + index);
     return (
       <Animatable.View
         duration={1200}
