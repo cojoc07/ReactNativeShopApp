@@ -9,8 +9,7 @@ import {
   Text,
 } from "react-native";
 import { Button } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
-
+import { SocialIcon } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import Colors from "../../constants/colors";
 
@@ -86,9 +85,14 @@ const AuthScreen = ({ route, navigation }) => {
     <KeyboardAvoidingView
       style={styles.screen}
       behavior={Platform.OS == "android" ? "height" : "padding"}
-      keyboardVerticalOffset={Platform.OS === "android" ? 90 : 50}
+      keyboardVerticalOffset={Platform.OS === "android" ? 0 : 0}
     >
-      <LinearGradient colors={["#ffeddf", "#ffe3ff"]} style={styles.gradient}>
+      <LinearGradient
+        colors={["#dfe0e2", "#f6f6f6"]}
+        start={{ x: -0.2, y: 0.5 }}
+        end={{ x: 0.5, y: 0.5 }}
+        style={styles.gradient}
+      >
         <Card style={styles.authContainer}>
           <ScrollView keyboardShouldPersistTaps={"handled"}>
             <Text style={styles.label}>Email</Text>
@@ -99,6 +103,7 @@ const AuthScreen = ({ route, navigation }) => {
               autoCapitalize="none"
               onChangeText={(text) => inputChangeHandler(text, "email")}
             />
+
             {/* {!emailIsValid && (
               <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>Email invalid.</Text>
@@ -138,6 +143,11 @@ const AuthScreen = ({ route, navigation }) => {
             </View>
           </ScrollView>
         </Card>
+        <View style={{ flexDirection: "row", marginTop: 15 }}>
+          <SocialIcon type="facebook" />
+          <SocialIcon type="google" />
+          <SocialIcon type="medium" />
+        </View>
       </LinearGradient>
     </KeyboardAvoidingView>
   );

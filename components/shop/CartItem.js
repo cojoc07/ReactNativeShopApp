@@ -39,11 +39,12 @@ const CartItem = (props) => {
 const styles = StyleSheet.create({
   cartItem: {
     padding: 10,
+    paddingHorizontal: 20,
     borderRadius: 15,
     backgroundColor: "white",
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 5,
+    justifyContent: "space-around",
+    marginHorizontal: 0,
     marginBottom: 5,
   },
   itemData: {
@@ -59,11 +60,12 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "open-sans-bold",
     fontSize: 16,
-    maxWidth: "90%",
+    maxWidth: "72%",
   },
   price: {
     fontFamily: "open-sans-bold",
     fontSize: 16,
+    maxWidth: "70%",
   },
   deleteButton: {
     marginLeft: 20,

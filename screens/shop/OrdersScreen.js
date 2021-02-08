@@ -10,7 +10,6 @@ import {
   Platform,
   StyleSheet,
 } from "react-native";
-import * as Animatable from "react-native-animatable";
 import Colors from "../../constants/colors";
 import { useSelector, useDispatch } from "react-redux";
 import OrderItem from "../../components/shop/OrderItem";

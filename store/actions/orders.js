@@ -31,6 +31,8 @@ export const fetchOrders = () => {
         );
       }
 
+      loadedOrders.sort((a, b) => (a.date > b.date ? -1 : 1));
+
       dispatch({ type: SET_ORDERS, orders: loadedOrders });
     } catch (err) {
       throw err;

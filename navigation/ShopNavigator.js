@@ -43,6 +43,7 @@ const AuthNavScreens = () => {
       <AuthNavigator.Screen
         name="AuthScreen"
         component={AuthScreen}
+        options={{ headerShown: false }}
       ></AuthNavigator.Screen>
     </AuthNavigator.Navigator>
   );
@@ -141,7 +142,7 @@ const ProductsNavScreens = () => {
         component={ProductsOverviewScreen}
         options={({ route, navigation }) => {
           return {
-            headerTitle: "Lista de produse",
+            headerTitle: "Catalog",
             headerStyle: {
               backgroundColor: Colors.primaryColor,
             },

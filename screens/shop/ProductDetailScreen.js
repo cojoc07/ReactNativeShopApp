@@ -2,6 +2,7 @@ import React, { useRef, useMemo, useCallback, useState } from "react";
 import moment from "moment";
 import { Button as Button2 } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
+import * as Animatable from "react-native-animatable";
 
 import {
   View,
@@ -29,6 +30,14 @@ const ProductDetailScreen = ({ route, navigation }) => {
   const selectedProduct = useSelector((state) =>
     state.products.availableProducts.find((prod) => prod.id === productId)
   );
+
+  const tags = [
+    { id: "1", text: "Hardware" },
+    { id: "2", text: "MicroSd" },
+    { id: "3", text: "Accessories" },
+    { id: "4", text: "Samsung" },
+    { id: "5", text: "Evo" },
+  ];
 
   const isInCart = useSelector((state) => {
     //state.cart.items.find((prod) => prod.id === productId);
@@ -81,7 +90,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
               alignItems: "center",
             }}
           >
-            <Chip
+            {/* <Chip
               icon="information"
               style={{ backgroundColor: Colors.primaryColor }}
               textStyle={{ color: "white" }}
@@ -89,9 +98,33 @@ const ProductDetailScreen = ({ route, navigation }) => {
               onPress={() => bottomSheetRef.current.expand()}
             >
               {oraData}
-            </Chip>
+            </Chip> */}
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {tags.map((tag) => {
+                return (
+                  <Animatable.View
+                    key={tag.id}
+                    duration={1200}
+                    delay={500 + tag.id * 200}
+                    animation="zoomIn"
+                  >
+                    <Chip
+                      icon="information"
+                      style={{
+                        backgroundColor: Colors.primaryColor,
+                        marginRight: 15,
+                      }}
+                      textStyle={{ color: "white" }}
+                      mode="outlined"
+                    >
+                      {tag.text}
+                    </Chip>
+                  </Animatable.View>
+                );
+              })}
+            </ScrollView>
 
-            <Chip
+            {/* <Chip
               icon="information"
               style={{ backgroundColor: Colors.primaryColor }}
               textStyle={{ color: "white" }}
@@ -107,7 +140,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
                 0,
                 selectedProduct.soldBy.indexOf("@")
               )}
-            </Chip>
+            </Chip> */}
           </View>
         </View>
 
