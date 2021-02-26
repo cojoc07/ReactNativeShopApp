@@ -83,9 +83,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Stefan Cojocaru - cojoc07@gmail.com
+Stefan Cojocaru - stefan.cojocaru@microsoft.com
 
-Project Link: [React Native Shop App](https://github.com/cojoc07/ReactNativeShopApp)
+Project Link: [React Native Shop App](https://github.com/stcojo/ReactNativeShopApp)
 
 
 [![MIT License][license-shield]][license-url]
